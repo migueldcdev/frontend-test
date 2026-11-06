@@ -4,12 +4,10 @@ import ProductListPage from './pages/ProductListPage.jsx'
 
 export default function App() {
   return (
-    <main>
-      <Routes>
-        <Route path="/" element={<ProductListPage />} />
-        <Route path="/product/:id" element={<ProductDetailPage />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </main>
+    <Routes>
+      <Route path="/" element={<ProductListPage />} />
+      <Route path="/product/:id" element={<ProductDetailPage />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   )
 }
