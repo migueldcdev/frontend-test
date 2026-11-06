@@ -1,3 +1,3 @@
 export default function App() {
-  return <h1>Mobile Shop</h1>
+  return <h1 className="text-2xl font-bold">Mobile Shop</h1>
 }
