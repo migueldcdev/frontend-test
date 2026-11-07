@@ -1,5 +1,5 @@
-import { fireEvent, render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { CartProvider } from '../../context/CartContext.jsx'
 import ProductActions from './ProductActions.jsx'
 
@@ -13,6 +13,10 @@ function addButton() {
 }
 
 describe('ProductActions', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
   it('preselects an option when it is the only one available', () => {
     render(<ProductActions productId="abc" colors={[black]} storages={[small, large]} />, { wrapper: CartProvider })
 
@@ -28,5 +32,17 @@ describe('ProductActions', () => {
     expect(addButton().disabled).toBe(true)
     fireEvent.change(screen.getByLabelText('Storage'), { target: { value: '2001' } })
     expect(addButton().disabled).toBe(false)
+  })
+
+  it('sends a single request when add is clicked again while pending', async () => {
+    const fetchMock = vi.fn(() => Promise.resolve(Response.json({ count: 1 })))
+    vi.stubGlobal('fetch', fetchMock)
+    render(<ProductActions productId="abc" colors={[black]} storages={[small]} />, { wrapper: CartProvider })
+
+    fireEvent.click(addButton())
+    fireEvent.click(addButton())
+    await waitFor(() => expect(addButton().disabled).toBe(false))
+
+    expect(fetchMock).toHaveBeenCalledTimes(1)
   })
 })

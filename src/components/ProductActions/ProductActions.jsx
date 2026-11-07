@@ -12,14 +12,18 @@ export default function ProductActions({ productId, colors, storages }) {
   const [colorCode, setColorCode] = useState(() => defaultCode(colors))
   const [storageCode, setStorageCode] = useState(() => defaultCode(storages))
   const [hasAddFailed, setHasAddFailed] = useState(false)
+  const [isAdding, setIsAdding] = useState(false)
   const isSelectionComplete = colorCode !== null && storageCode !== null
 
   async function addSelectionToCart() {
+    setIsAdding(true)
     try {
       addToCount(await addToCart({ id: productId, colorCode, storageCode }))
       setHasAddFailed(false)
     } catch {
       setHasAddFailed(true)
+    } finally {
+      setIsAdding(false)
     }
   }
 
@@ -29,7 +33,7 @@ export default function ProductActions({ productId, colors, storages }) {
       <OptionSelect label="Storage" options={storages} selectedCode={storageCode} onSelect={setStorageCode} />
       <button
         type="button"
-        disabled={!isSelectionComplete}
+        disabled={!isSelectionComplete || isAdding}
         onClick={addSelectionToCart}
         className="rounded bg-black px-4 py-2 font-semibold text-white disabled:cursor-not-allowed disabled:bg-gray-400"
       >
