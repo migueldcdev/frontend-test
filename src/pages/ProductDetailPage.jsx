@@ -23,7 +23,7 @@ export default function ProductDetailPage() {
           <section>
             <h1 className="mb-4 text-2xl font-bold">{productName}</h1>
             <ProductDescription product={product} />
-            <ProductActions productId={product.id} colors={product.colors} storages={product.storages} />
+            <ProductActions key={product.id} productId={product.id} colors={product.colors} storages={product.storages} />
           </section>
         </div>
       )}
