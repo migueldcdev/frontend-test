@@ -2,7 +2,7 @@ export default function ProductDescription({ product }) {
   const attributes = [
     ['Brand', product.brand],
     ['Model', product.model],
-    ['Price', product.price && `${product.price} €`],
+    ['Price', product.price ? `${product.price} €` : '-'],
     ['CPU', product.cpu],
     ['RAM', product.ram],
     ['Operating system', product.os],
