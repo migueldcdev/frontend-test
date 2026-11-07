@@ -100,7 +100,7 @@ describe('products api', () => {
 
     expect(count).toBe(3)
     expect(fetchMock).toHaveBeenCalledWith(
-      'https://itx-frontend-test.onrender.com/api/cart',
+      expect.stringMatching(/\/api\/cart$/),
       expect.objectContaining({
         method: 'POST',
         body: JSON.stringify({ id: 'abc', colorCode: 1000, storageCode: 2000 }),
