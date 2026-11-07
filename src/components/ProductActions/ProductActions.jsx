@@ -35,7 +35,7 @@ export default function ProductActions({ productId, colors, storages }) {
       >
         Add to cart
       </button>
-      {hasAddFailed && <p role="alert">Something went wrong</p>}
+      {hasAddFailed && <p role="alert" className="text-red-600">Something went wrong</p>}
     </div>
   )
 }

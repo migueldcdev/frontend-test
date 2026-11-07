@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Header from '../components/Header/Header.jsx'
+import PageLayout from '../components/PageLayout/PageLayout.jsx'
 import ProductCard from '../components/ProductCard/ProductCard.jsx'
 import SearchBar from '../components/SearchBar/SearchBar.jsx'
 import { useProducts } from '../hooks/useProducts.js'
@@ -15,24 +15,23 @@ export default function ProductListPage() {
   const visibleProducts = products?.filter((product) => matchesQuery(product, query))
 
   return (
-    <>
-      <Header />
-      <main className="mx-auto max-w-6xl p-4">
-        <h1 className="mb-4 text-2xl font-bold">Products</h1>
+    <PageLayout>
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <h1 className="text-2xl font-bold">Products</h1>
         <SearchBar query={query} onQueryChange={setQuery} />
-        {isLoading && <p>Loading...</p>}
-        {hasError && <p>Something went wrong</p>}
-        {visibleProducts?.length === 0 && <p>No products found</p>}
-        {visibleProducts?.length > 0 && (
-          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {visibleProducts.map((product) => (
-              <li key={product.id}>
-                <ProductCard product={product} />
-              </li>
-            ))}
-          </ul>
-        )}
-      </main>
-    </>
+      </div>
+      {isLoading && <p>Loading...</p>}
+      {hasError && <p>Something went wrong</p>}
+      {visibleProducts?.length === 0 && <p>No products found</p>}
+      {visibleProducts?.length > 0 && (
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {visibleProducts.map((product) => (
+            <li key={product.id}>
+              <ProductCard product={product} />
+            </li>
+          ))}
+        </ul>
+      )}
+    </PageLayout>
   )
 }
