@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { CartProvider } from '../context/CartContext.jsx'
 import ProductListPage from './ProductListPage.jsx'
 
 const apiProducts = [
@@ -9,7 +10,13 @@ const apiProducts = [
 ]
 
 async function renderLoadedPage() {
-  render(<ProductListPage />, { wrapper: MemoryRouter })
+  render(
+    <MemoryRouter>
+      <CartProvider>
+        <ProductListPage />
+      </CartProvider>
+    </MemoryRouter>,
+  )
   await screen.findByRole('link', { name: /Acer Liquid Z6/ })
 }
 

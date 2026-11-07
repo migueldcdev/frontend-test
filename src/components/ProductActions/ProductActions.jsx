@@ -1,14 +1,27 @@
 import { useState } from 'react'
+import { addToCart } from '../../api/products.js'
+import { useCart } from '../../context/CartContext.jsx'
 import OptionSelect from './OptionSelect.jsx'
 
 function defaultCode(options) {
   return options.length === 1 ? options[0].code : null
 }
 
-export default function ProductActions({ colors, storages }) {
+export default function ProductActions({ productId, colors, storages }) {
+  const { addToCount } = useCart()
   const [colorCode, setColorCode] = useState(() => defaultCode(colors))
   const [storageCode, setStorageCode] = useState(() => defaultCode(storages))
+  const [hasAddFailed, setHasAddFailed] = useState(false)
   const isSelectionComplete = colorCode !== null && storageCode !== null
+
+  async function addSelectionToCart() {
+    try {
+      addToCount(await addToCart({ id: productId, colorCode, storageCode }))
+      setHasAddFailed(false)
+    } catch {
+      setHasAddFailed(true)
+    }
+  }
 
   return (
     <div className="mt-6 flex flex-col gap-4">
@@ -17,10 +30,12 @@ export default function ProductActions({ colors, storages }) {
       <button
         type="button"
         disabled={!isSelectionComplete}
+        onClick={addSelectionToCart}
         className="rounded bg-black px-4 py-2 font-semibold text-white disabled:cursor-not-allowed disabled:bg-gray-400"
       >
         Add to cart
       </button>
+      {hasAddFailed && <p role="alert">Something went wrong</p>}
     </div>
   )
 }

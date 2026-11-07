@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
+import { CartProvider } from '../../context/CartContext.jsx'
 import ProductActions from './ProductActions.jsx'
 
 const black = { code: 1000, name: 'Black' }
@@ -13,14 +14,14 @@ function addButton() {
 
 describe('ProductActions', () => {
   it('preselects an option when it is the only one available', () => {
-    render(<ProductActions colors={[black]} storages={[small, large]} />)
+    render(<ProductActions productId="abc" colors={[black]} storages={[small, large]} />, { wrapper: CartProvider })
 
     expect(screen.getByLabelText('Color').value).toBe('1000')
     expect(screen.getByLabelText('Storage').value).toBe('')
   })
 
   it('enables the add button only once color and storage are selected', () => {
-    render(<ProductActions colors={[black, white]} storages={[small, large]} />)
+    render(<ProductActions productId="abc" colors={[black, white]} storages={[small, large]} />, { wrapper: CartProvider })
 
     expect(addButton().disabled).toBe(true)
     fireEvent.change(screen.getByLabelText('Color'), { target: { value: '1001' } })
