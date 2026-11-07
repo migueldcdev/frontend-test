@@ -1,20 +1,22 @@
 const TTL_MS = 60 * 60 * 1000
 const PREFIX = 'cache:'
 
+function readEntry(storageKey) {
+  try {
+    return JSON.parse(localStorage.getItem(storageKey))
+  } catch {
+    return null
+  }
+}
+
 export function getCached(key) {
   const storageKey = PREFIX + key
+  const entry = readEntry(storageKey)
+  if (entry && Date.now() - entry.savedAt < TTL_MS) return entry.value
   try {
-    const entry = JSON.parse(localStorage.getItem(storageKey))
-    if (entry && Date.now() - entry.savedAt < TTL_MS) {
-      return entry.value
-    }
     localStorage.removeItem(storageKey)
   } catch {
-    try {
-      localStorage.removeItem(storageKey)
-    } catch {
-      // Storage unavailable: nothing to clean up.
-    }
+    // Storage unavailable: nothing to clean up.
   }
   return null
 }
