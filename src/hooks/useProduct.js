@@ -2,12 +2,23 @@ import { useEffect, useState } from 'react'
 import { getProductById } from '../api/products.js'
 
 export function useProduct(id) {
-  const [product, setProduct] = useState(null)
-  const [hasError, setHasError] = useState(false)
+  const [result, setResult] = useState({ id: null, product: null, hasError: false })
 
   useEffect(() => {
-    getProductById(id).then(setProduct, () => setHasError(true))
+    let isCancelled = false
+    getProductById(id).then(
+      (product) => !isCancelled && setResult({ id, product, hasError: false }),
+      () => !isCancelled && setResult({ id, product: null, hasError: true }),
+    )
+    return () => {
+      isCancelled = true
+    }
   }, [id])
 
-  return { product, isLoading: product === null && !hasError, hasError }
+  const isCurrent = result.id === id
+  return {
+    product: isCurrent ? result.product : null,
+    isLoading: !isCurrent,
+    hasError: isCurrent && result.hasError,
+  }
 }
