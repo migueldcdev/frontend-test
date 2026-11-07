@@ -41,8 +41,7 @@ src/
   context/
     CartContext.jsx    # cart count, persisted in localStorage
   hooks/
-    useProducts.js     # product list with loading and error state
-    useProduct.js      # product detail with loading and error state
+    useAsync.js        # runs a loader with loading and error state, ignores stale responses
   components/
     Header/            # title link, breadcrumbs, cart count
     PageLayout/        # header plus page container shared by both views

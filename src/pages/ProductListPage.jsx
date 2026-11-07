@@ -1,8 +1,9 @@
 import { useState } from 'react'
+import { getProducts } from '../api/products.js'
 import PageLayout from '../components/PageLayout/PageLayout.jsx'
 import ProductCard from '../components/ProductCard/ProductCard.jsx'
 import SearchBar from '../components/SearchBar/SearchBar.jsx'
-import { useProducts } from '../hooks/useProducts.js'
+import { useAsync } from '../hooks/useAsync.js'
 
 function matchesQuery({ brand, model }, query) {
   const normalizedQuery = query.trim().toLowerCase()
@@ -10,7 +11,7 @@ function matchesQuery({ brand, model }, query) {
 }
 
 export default function ProductListPage() {
-  const { products, isLoading, hasError } = useProducts()
+  const { value: products, isLoading, hasError } = useAsync(getProducts)
   const [query, setQuery] = useState('')
   const visibleProducts = products?.filter((product) => matchesQuery(product, query))
 

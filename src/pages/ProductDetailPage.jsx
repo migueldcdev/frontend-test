@@ -1,13 +1,14 @@
 import { Link, useParams } from 'react-router-dom'
+import { getProductById } from '../api/products.js'
 import PageLayout from '../components/PageLayout/PageLayout.jsx'
 import ProductActions from '../components/ProductActions/ProductActions.jsx'
 import ProductDescription from '../components/ProductDescription/ProductDescription.jsx'
 import ProductImage from '../components/ProductImage/ProductImage.jsx'
-import { useProduct } from '../hooks/useProduct.js'
+import { useAsync } from '../hooks/useAsync.js'
 
 export default function ProductDetailPage() {
   const { id } = useParams()
-  const { product, isLoading, hasError } = useProduct(id)
+  const { value: product, isLoading, hasError } = useAsync(getProductById, id)
   const productName = product && `${product.brand} ${product.model}`
 
   return (
