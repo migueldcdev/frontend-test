@@ -1,9 +1,9 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { CartProvider } from '../../context/CartContext.jsx'
-import ProductActions from '../ProductActions/ProductActions.jsx'
-import Header from './Header.jsx'
+import Header from '../components/Header/Header.jsx'
+import ProductActions from '../components/ProductActions/ProductActions.jsx'
+import { CartProvider } from './CartContext.jsx'
 
 const colors = [{ code: 1000, name: 'Black' }]
 const storages = [{ code: 2000, name: '16 GB' }]
@@ -19,7 +19,7 @@ function renderShop() {
   )
 }
 
-describe('Header cart count', () => {
+describe('Cart count', () => {
   beforeEach(() => {
     localStorage.clear()
     vi.stubGlobal('fetch', vi.fn(() => Promise.resolve(Response.json({ count: 1 }))))
