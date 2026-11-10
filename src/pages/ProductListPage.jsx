@@ -17,15 +17,15 @@ export default function ProductListPage() {
 
   return (
     <PageLayout>
-      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <h1 className="text-2xl font-bold">Products</h1>
+      <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <h1 className="text-3xl font-semibold tracking-tight">Products</h1>
         <SearchBar query={query} onQueryChange={setQuery} />
       </div>
       {isLoading && <p>Loading...</p>}
       {hasError && <p>Something went wrong</p>}
       {visibleProducts?.length === 0 && <p>No products found</p>}
       {visibleProducts?.length > 0 && (
-        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {visibleProducts.map((product) => (
             <li key={product.id}>
               <ProductCard product={product} />

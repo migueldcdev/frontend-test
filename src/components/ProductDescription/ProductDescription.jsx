@@ -15,11 +15,11 @@ export default function ProductDescription({ product }) {
   ]
 
   return (
-    <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2">
+    <dl className="divide-y divide-neutral-200/70 text-sm">
       {attributes.map(([label, value]) => (
-        <div key={label} className="contents">
-          <dt className="font-semibold">{label}</dt>
-          <dd>{value || '-'}</dd>
+        <div key={label} className="flex justify-between gap-4 py-2.5">
+          <dt className="text-neutral-500">{label}</dt>
+          <dd className="text-right">{value || '-'}</dd>
         </div>
       ))}
     </dl>

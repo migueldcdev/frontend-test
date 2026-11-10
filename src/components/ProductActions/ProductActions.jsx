@@ -28,18 +28,18 @@ export default function ProductActions({ productId, colors, storages }) {
   }
 
   return (
-    <div className="mt-6 flex flex-col gap-4">
+    <div className="mt-8 flex flex-col gap-4">
       <OptionSelect label="Color" options={colors} selectedCode={colorCode} onSelect={setColorCode} />
       <OptionSelect label="Storage" options={storages} selectedCode={storageCode} onSelect={setStorageCode} />
       <button
         type="button"
         disabled={!isSelectionComplete || isAdding}
         onClick={addSelectionToCart}
-        className="rounded bg-black px-4 py-2 font-semibold text-white disabled:cursor-not-allowed disabled:bg-gray-400"
+        className="mt-2 rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-neutral-700 disabled:cursor-not-allowed disabled:bg-neutral-300"
       >
         Add to cart
       </button>
-      {hasAddFailed && <p role="alert" className="text-red-600">Something went wrong</p>}
+      {hasAddFailed && <p role="alert" className="text-sm text-red-600">Something went wrong</p>}
     </div>
   )
 }

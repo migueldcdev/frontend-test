@@ -1,11 +1,11 @@
 export default function OptionSelect({ label, options, selectedCode, onSelect }) {
   return (
-    <label className="flex flex-col gap-1">
-      <span className="font-semibold">{label}</span>
+    <label className="flex flex-col gap-1.5">
+      <span className="text-xs font-medium text-neutral-500">{label}</span>
       <select
         value={selectedCode ?? ''}
         onChange={(event) => onSelect(Number(event.target.value))}
-        className="rounded border border-gray-300 px-3 py-2"
+        className="rounded-xl border border-neutral-200 bg-white px-3 py-2.5 text-sm outline-none transition focus:border-neutral-900 focus:ring-4 focus:ring-neutral-900/5"
       >
         <option value="" disabled>
           Select {label.toLowerCase()}
